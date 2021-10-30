@@ -12,6 +12,7 @@ namespace TodoApp.Setup
         public UseCaseSetup(IServiceCollection services)
         {
             services.AddScoped<BookUseCase>();
+            services.AddScoped<SignupUseCase>();
         }
     }
 }
