@@ -7,7 +7,7 @@ using ToDoApp_backend.Repository;
 using ToDoApp_backend.Repository.User;
 using ToDoApp_backend.Repository.License;
 
-namespace TodoApp.Setup
+namespace ToDoApp_backend.Setup
 {
     public class RepositorySetup
     {

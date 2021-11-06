@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TodoApp.Setup;
+using ToDoApp_backend.Setup;
 using ToDoApp_backend.Context;
 using AutoMapper;
 using ToDoApp_backend.DiConfig;

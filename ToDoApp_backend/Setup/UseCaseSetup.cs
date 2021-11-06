@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using ToDoApp_backend.UseCase;
 
-namespace TodoApp.Setup
+namespace ToDoApp_backend.Setup
 {
     public class UseCaseSetup
     {

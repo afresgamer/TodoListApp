@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TodoApp.ViewModel.Signup
+namespace ToDoApp_backend.ViewModel.Signup
 {
     public class SignupViewModel
     {

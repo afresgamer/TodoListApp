@@ -7,7 +7,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TodoApp.Utility
+namespace ToDoApp_backend.Utility
 {
     public class MailApi
     {

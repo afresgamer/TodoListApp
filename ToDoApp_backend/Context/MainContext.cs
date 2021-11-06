@@ -16,5 +16,6 @@ namespace ToDoApp_backend.Context
         public DbSet<Book> Books { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<License> Licenses { get; set; }
+        public DbSet<CategoryMaster> CategoryMasters { get; set; }
     }
 }

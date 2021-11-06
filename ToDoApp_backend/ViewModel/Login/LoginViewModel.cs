@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TodoApp.ViewModel.Login
+namespace ToDoApp_backend.ViewModel.Login
 {
     public class LoginViewModel
     {
