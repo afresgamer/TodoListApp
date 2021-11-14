@@ -8,6 +8,7 @@ namespace ToDoApp_backend.DB
 {
     public class CategoryMaster : DbBase
     {
+        public long UserId { get; set; }
         public string CategoryName { get; set; }
         public string Summary { get; set; }
         public int SortNo { get; set; }

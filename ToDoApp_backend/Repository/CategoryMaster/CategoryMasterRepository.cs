@@ -13,8 +13,8 @@ namespace ToDoApp_backend.Repository.CategoryMaster
 {
     public interface ICategoryMasterRepository
     {
-        Task<List<CategoryMasterViewModel>> FetchCategoryMasterListAsync();
-        Task<bool> InsertCategoryMaster(CategoryMasterViewModel viewModel);
+        Task<List<CategoryMasterViewModel>> FetchCategoryMasterListAsync(long userId);
+        Task<bool> InsertCategoryMaster(CategoryMasterViewModel viewModel, long userId);
         Task<bool> SortCategoryMasterList(List<CategoryMasterViewModel> categoryMasterList);
         Task DeleteCategoryMaster(CategoryMasterViewModel viewModel);
 
@@ -29,11 +29,11 @@ namespace ToDoApp_backend.Repository.CategoryMaster
             _mapper = mapper;
         }
 
-        public async Task<List<CategoryMasterViewModel>> FetchCategoryMasterListAsync()
+        public async Task<List<CategoryMasterViewModel>> FetchCategoryMasterListAsync(long userId)
         {
             var dataList = await db.CategoryMasters
                 .AsNoTracking()
-                .Where(x => x.Id > 0 && x.SortNo > 0)
+                .Where(x => x.SortNo > 0 && x.UserId == userId)
                 .ToListAsync();
 
             var result = _mapper.Map<List<CategoryMasterViewModel>>(dataList);
@@ -41,7 +41,7 @@ namespace ToDoApp_backend.Repository.CategoryMaster
             return result;
         }
 
-        public async Task<bool> InsertCategoryMaster(CategoryMasterViewModel viewModel)
+        public async Task<bool> InsertCategoryMaster(CategoryMasterViewModel viewModel, long userId)
         {
             if (viewModel == null) return false;
 
@@ -51,6 +51,7 @@ namespace ToDoApp_backend.Repository.CategoryMaster
                 {
                     var data = _mapper.Map<DB.CategoryMaster>(viewModel);
                     data.CreateDate = DateTime.Now;
+                    data.UserId = userId;
 
                     await Add(data);
                     await db.SaveChangesAsync();
