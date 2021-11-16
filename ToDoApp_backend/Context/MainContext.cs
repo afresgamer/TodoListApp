@@ -17,5 +17,6 @@ namespace ToDoApp_backend.Context
         public DbSet<User> Users { get; set; }
         public DbSet<License> Licenses { get; set; }
         public DbSet<CategoryMaster> CategoryMasters { get; set; }
+        public DbSet<Setting> Settings { get; set; }
     }
 }
