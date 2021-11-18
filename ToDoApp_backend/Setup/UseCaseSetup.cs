@@ -15,6 +15,7 @@ namespace ToDoApp_backend.Setup
             services.AddScoped<SignupUseCase>();
             services.AddScoped<LoginUseCase>();
             services.AddScoped<CategoryMasterUseCase>();
+            services.AddScoped<SettingUseCase>();
         }
     }
 }

@@ -7,6 +7,7 @@ using ToDoApp_backend.Repository;
 using ToDoApp_backend.Repository.User;
 using ToDoApp_backend.Repository.License;
 using ToDoApp_backend.Repository.CategoryMaster;
+using ToDoApp_backend.Repository.Setting;
 
 namespace ToDoApp_backend.Setup
 {
@@ -18,6 +19,7 @@ namespace ToDoApp_backend.Setup
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ILicenseRepository, LicenseRepository>();
             services.AddTransient<ICategoryMasterRepository, CategoryMasterRepository>();
+            services.AddTransient<ISettingRepository, SettingRepository>();
         }
     }
 }
