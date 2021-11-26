@@ -13,6 +13,7 @@ namespace ToDoApp_backend.Repository.CategoryMaster
 {
     public interface ICategoryMasterRepository
     {
+        Task<List<DB.CategoryMaster>> FetchCategoryMaster(long userId);
         Task<List<CategoryMasterViewModel>> FetchCategoryMasterListAsync(long userId);
         Task<bool> InsertCategoryMaster(CategoryMasterViewModel viewModel, long userId);
         Task<bool> SortCategoryMasterList(List<CategoryMasterViewModel> categoryMasterList);
@@ -29,11 +30,23 @@ namespace ToDoApp_backend.Repository.CategoryMaster
             _mapper = mapper;
         }
 
+        public async Task<List<DB.CategoryMaster>> FetchCategoryMaster(long userId)
+        {
+            var result = await db.CategoryMasters
+                .AsNoTracking()
+                .Where(x => x.UserId == userId)
+                .OrderBy(x => x.Id).ThenBy(x => x.SortNo)
+                .ToListAsync();
+
+            return result;
+        }
+
         public async Task<List<CategoryMasterViewModel>> FetchCategoryMasterListAsync(long userId)
         {
             var dataList = await db.CategoryMasters
                 .AsNoTracking()
                 .Where(x => x.SortNo > 0 && x.UserId == userId)
+                .OrderBy(x => x.Id).ThenBy(x => x.SortNo)
                 .ToListAsync();
 
             var result = _mapper.Map<List<CategoryMasterViewModel>>(dataList);

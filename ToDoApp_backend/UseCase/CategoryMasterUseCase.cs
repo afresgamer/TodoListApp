@@ -36,6 +36,20 @@ namespace ToDoApp_backend.UseCase
             return result;
         }
 
+        public async Task<List<DB.CategoryMaster>> GetCategoryMastersAsync()
+        {
+            var filePath = Path.Combine(
+                _configuration.GetValue<string>("LoginInfoFilePath"),
+                _configuration.GetValue<string>("LoginInfoFileName")
+            );
+
+            var userInfo = JsonUtility.JsonDeserialize<UserSession>(filePath);
+
+            var result = await _repository.FetchCategoryMaster(userInfo.UserId);
+
+            return result;
+        }
+
         public async Task<bool> CreateNewCategoryMaster(CategoryMasterViewModel categoryMaster)
         {
             var filePath = Path.Combine(

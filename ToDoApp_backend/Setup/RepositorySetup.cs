@@ -8,6 +8,7 @@ using ToDoApp_backend.Repository.User;
 using ToDoApp_backend.Repository.License;
 using ToDoApp_backend.Repository.CategoryMaster;
 using ToDoApp_backend.Repository.Setting;
+using ToDoApp_backend.Repository.Schedule;
 
 namespace ToDoApp_backend.Setup
 {
@@ -20,6 +21,7 @@ namespace ToDoApp_backend.Setup
             services.AddTransient<ILicenseRepository, LicenseRepository>();
             services.AddTransient<ICategoryMasterRepository, CategoryMasterRepository>();
             services.AddTransient<ISettingRepository, SettingRepository>();
+            services.AddTransient<IScheduleRepository, ScheduleRepository>();
         }
     }
 }

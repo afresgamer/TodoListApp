@@ -28,6 +28,14 @@ namespace ToDoApp_backend.Controllers
             return Ok(result);
         }
 
+        [HttpGet("data-list")]
+        public async Task<ActionResult<DB.CategoryMaster>> GetDataList()
+        {
+            var result = await _useCase.GetCategoryMastersAsync();
+
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<bool> Post(CategoryMasterViewModel categoryMaster)
         {

@@ -12,6 +12,7 @@ namespace ToDoApp_backend.Repository.Setting
 {
     public interface ISettingRepository
     {
+        Task<DB.Setting> FindSetting(long userId);
         Task<SettingViewModel> FindSettingViewModel(long userId);
         Task<bool> UpsertSetting(SettingViewModel viewModel, long userId);
     }
@@ -23,6 +24,16 @@ namespace ToDoApp_backend.Repository.Setting
         public SettingRepository(MainContext db, IMapper mapper) :base(db)
         {
             _mapper = mapper;
+        }
+
+        public async Task<DB.Setting> FindSetting(long userId)
+        {
+            var result = await db.Settings
+                .AsNoTracking()
+                .Where(x => x.UserId == userId)
+                .FirstOrDefaultAsync();
+
+            return result;
         }
 
         public async Task<SettingViewModel> FindSettingViewModel(long userId)

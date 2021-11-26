@@ -7,6 +7,7 @@ using ToDoApp_backend.DB;
 using ToDoApp_backend.ViewModel;
 using ToDoApp_backend.ViewModel.CategoryMaster;
 using ToDoApp_backend.ViewModel.Setting;
+using ToDoApp_backend.ViewModel.Schedule;
 
 namespace ToDoApp_backend.DiConfig
 {
@@ -15,11 +16,14 @@ namespace ToDoApp_backend.DiConfig
         public AutoMapperProfileConfig()
         {
             CreateMap<Book, BookViewModel>()
-                .ForMember(book => book.BookId, option => option.MapFrom(viewModel => viewModel.Id))
+                .ForMember(viewModel => viewModel.BookId, option => option.MapFrom(book => book.Id))
                 .ReverseMap();
             CreateMap<CategoryMaster, CategoryMasterViewModel>()
                 .ReverseMap();
             CreateMap<Setting, SettingViewModel>()
+                .ReverseMap();
+            CreateMap<Schedule, ScheduleViewModel>()
+                .ForMember(viewModel => viewModel.ScheduleName, option => option.MapFrom(schedule => schedule.Name))
                 .ReverseMap();
 
         }
