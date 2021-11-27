@@ -8,6 +8,7 @@ using ToDoApp_backend.ViewModel;
 using ToDoApp_backend.ViewModel.CategoryMaster;
 using ToDoApp_backend.ViewModel.Setting;
 using ToDoApp_backend.ViewModel.Schedule;
+using ToDoApp_backend.ViewModel.ScheduleList;
 
 namespace ToDoApp_backend.DiConfig
 {
@@ -24,6 +25,13 @@ namespace ToDoApp_backend.DiConfig
                 .ReverseMap();
             CreateMap<Schedule, ScheduleViewModel>()
                 .ForMember(viewModel => viewModel.ScheduleName, option => option.MapFrom(schedule => schedule.Name))
+                .ReverseMap();
+            CreateMap<Schedule, ScheduleListViewModel>()
+                .ForMember(viewModel => viewModel.ScheduleName, option => option.MapFrom(schedule => schedule.Name))
+                .ForMember(viewModel => viewModel.ScheduleId, option => option.MapFrom(schedule => schedule.Id))
+                .ForMember(viewModel => viewModel.StartDay, option => option.MapFrom(schedule => schedule.StartDay.ToString("yyyy/MM/dd")))
+                .ForMember(viewModel => viewModel.EndDay, option => option.MapFrom(schedule => schedule.EndDay.ToString("yyyy/MM/dd")))
+                .ForMember(viewModel => viewModel.UsageTime, option => option.MapFrom(schedule => schedule.UsageTime.ToString() + "時間"))
                 .ReverseMap();
 
         }

@@ -13,6 +13,7 @@ namespace ToDoApp_backend.Repository.CategoryMaster
 {
     public interface ICategoryMasterRepository
     {
+        Task<DB.CategoryMaster> FindCategoryMaster(long categoryMasterId);
         Task<List<DB.CategoryMaster>> FetchCategoryMaster(long userId);
         Task<List<CategoryMasterViewModel>> FetchCategoryMasterListAsync(long userId);
         Task<bool> InsertCategoryMaster(CategoryMasterViewModel viewModel, long userId);
@@ -28,6 +29,12 @@ namespace ToDoApp_backend.Repository.CategoryMaster
         public CategoryMasterRepository(MainContext db, IMapper mapper) : base(db)
         {
             _mapper = mapper;
+        }
+
+        public async Task<DB.CategoryMaster> FindCategoryMaster(long categoryMasterId)
+        {
+            var result = await FindAsync(categoryMasterId);
+            return result;
         }
 
         public async Task<List<DB.CategoryMaster>> FetchCategoryMaster(long userId)

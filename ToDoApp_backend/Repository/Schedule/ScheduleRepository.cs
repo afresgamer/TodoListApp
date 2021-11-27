@@ -6,31 +6,41 @@ using System.Linq;
 using System.Threading.Tasks;
 using ToDoApp_backend.Context;
 using ToDoApp_backend.Repository.Base;
+using ToDoApp_backend.Repository.CategoryMaster;
 using ToDoApp_backend.Repository.Setting;
 using ToDoApp_backend.ViewModel.Schedule;
+using ToDoApp_backend.ViewModel.ScheduleList;
 
 namespace ToDoApp_backend.Repository.Schedule
 {
     public interface IScheduleRepository
     {
-        Task<ScheduleViewModel> GetSchedule(long scheduleId, long userId);
+        Task<ScheduleViewModel> FindSchedule(long scheduleId, long userId);
+        Task<List<ScheduleListViewModel>> FetchScheduleListAsync(long userId);
         Task<long> InsertSchedule(ScheduleViewModel viewModel, long userId);
         Task<bool> UpdateSchedule(ScheduleViewModel viewModel, long userId);
         Task DeleteSchedule(long scheduleId);
+        Task DeleteScheduleList(List<long> scheduleIdList);
     }
 
     public class ScheduleRepository : RepositoryBase<DB.Schedule>, IScheduleRepository
     {
         private readonly IMapper _mapper;
         private readonly ISettingRepository _settingRepository;
+        private readonly ICategoryMasterRepository _categoryMasterReposioty;
 
-        public ScheduleRepository(MainContext db, IMapper mapper, ISettingRepository settingRepository) : base(db)
+        public ScheduleRepository(
+            MainContext db, 
+            IMapper mapper, 
+            ISettingRepository settingRepository,
+            ICategoryMasterRepository categoryMasterRepository) : base(db)
         {
             _mapper = mapper;
             _settingRepository = settingRepository;
+            _categoryMasterReposioty = categoryMasterRepository;
         }
 
-        public async Task<ScheduleViewModel> GetSchedule(long scheduleId, long userId)
+        public async Task<ScheduleViewModel> FindSchedule(long scheduleId, long userId)
         {
             var data = await FindAsync(scheduleId);
 
@@ -39,6 +49,23 @@ namespace ToDoApp_backend.Repository.Schedule
 
             result.NoticeSettingFlg = setting.NotificationSettingsFlg;
             result.CategoryMasterFlg = setting.CategoryMasterFlg;
+
+            return result;
+        }
+
+        public async Task<List<ScheduleListViewModel>> FetchScheduleListAsync(long userId)
+        {
+            var data = await db.Schedules
+                .AsNoTracking()
+                .Where(x => x.UserId == userId && !string.IsNullOrEmpty(x.Name))
+                .ToListAsync();
+
+            var result = _mapper.Map<List<ScheduleListViewModel>>(data);
+
+            foreach(var scheduleData in result)
+            {
+                scheduleData.CategoryMasterName = _categoryMasterReposioty.FindCategoryMaster(scheduleData.CategoryMasterId).Result.CategoryName;
+            }
 
             return result;
         }
@@ -118,6 +145,25 @@ namespace ToDoApp_backend.Repository.Schedule
                 try
                 {
                     await Remove(scheduleId);
+                    await db.SaveChangesAsync();
+
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+        }
+
+        public async Task DeleteScheduleList(List<long> scheduleIdList)
+        {
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    await Remove(scheduleIdList);
                     await db.SaveChangesAsync();
 
                     transaction.Commit();

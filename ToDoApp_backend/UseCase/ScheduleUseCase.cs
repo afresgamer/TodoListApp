@@ -31,7 +31,7 @@ namespace ToDoApp_backend.UseCase
 
             var userInfo = JsonUtility.JsonDeserialize<UserSession>(filePath);
 
-            var result = await _scheduleRepository.GetSchedule(scheduleId, userInfo.UserId);
+            var result = await _scheduleRepository.FindSchedule(scheduleId, userInfo.UserId);
 
             return result;
         }

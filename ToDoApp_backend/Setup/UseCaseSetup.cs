@@ -17,6 +17,7 @@ namespace ToDoApp_backend.Setup
             services.AddScoped<CategoryMasterUseCase>();
             services.AddScoped<SettingUseCase>();
             services.AddScoped<ScheduleUseCase>();
+            services.AddScoped<ScheduleListUseCase>();
         }
     }
 }
