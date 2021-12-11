@@ -19,5 +19,6 @@ namespace ToDoApp_backend.Context
         public DbSet<CategoryMaster> CategoryMasters { get; set; }
         public DbSet<Setting> Settings { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<Calendar> Calendars { get; set; }
     }
 }
