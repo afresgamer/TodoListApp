@@ -74,3 +74,9 @@ ToDoApp_backend/.vs/ToDoApp_backend/config/applicationhost.config
 ToDoApp_backend/.vs/ToDoApp_backend/DesignTimeBuild/.dtbcache.v2
 ToDoApp_backend/appsettings.Development.json
 ToDoApp_backend/appsettings.json
+frontend_App/todo-list/tsconfig.json
+frontend_App/todo-list/.eslintrc.js
+frontend_App/todo-list/.editorconfig
+frontend_App/todo-list/package.json
+frontend_App/todo-list/package-lock.json
+frontend_App/todo-list/nuxt.config.js
