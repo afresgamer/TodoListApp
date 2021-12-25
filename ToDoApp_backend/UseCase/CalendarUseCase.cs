@@ -1,31 +1,28 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
-using ToDoApp_backend.Repository.Schedule;
-using ToDoApp_backend.ViewModel.Schedule;
-using ToDoApp_backend.Utility;
 using ToDoApp_backend.Auth;
 using ToDoApp_backend.Repository.Calendar;
+using ToDoApp_backend.Utility;
+using ToDoApp_backend.ViewModel.Calendar;
 
 namespace ToDoApp_backend.UseCase
 {
-    public class ScheduleUseCase
+    public class CalendarUseCase
     {
-        private readonly IScheduleRepository _scheduleRepository;
         private readonly ICalendarRepository _calendarRepository;
         private readonly IConfiguration _configuration;
 
-        public ScheduleUseCase(IScheduleRepository scheduleRepository, ICalendarRepository calendarRepository, IConfiguration configuration)
+        public CalendarUseCase(ICalendarRepository calendarRepository ,IConfiguration configuration)
         {
-            _scheduleRepository = scheduleRepository;
             _configuration = configuration;
             _calendarRepository = calendarRepository;
         }
 
-        public async Task<ScheduleViewModel> GetSchedule(long scheduleId)
+        public async Task<CalendarEventViewModel> GetCalendar(long calendarId)
         {
             var filePath = Path.Combine(
                _configuration.GetValue<string>("LoginInfoFilePath"),
@@ -34,12 +31,26 @@ namespace ToDoApp_backend.UseCase
 
             var userInfo = JsonUtility.JsonDeserialize<UserSession>(filePath);
 
-            var result = await _scheduleRepository.FindSchedule(scheduleId, userInfo.UserId);
+            var result = await _calendarRepository.FindCalendarAsync(calendarId, userInfo.UserId);
 
             return result;
         }
 
-        public async Task<long> CreateSchedule(ScheduleViewModel viewModel)
+        public async Task<List<CalendarEventViewModel>> GetCalendarList()
+        {
+            var filePath = Path.Combine(
+               _configuration.GetValue<string>("LoginInfoFilePath"),
+               _configuration.GetValue<string>("LoginInfoFileName")
+           );
+
+            var userInfo = JsonUtility.JsonDeserialize<UserSession>(filePath);
+
+            var result = await _calendarRepository.FetchCalendarListAsync(userInfo.UserId);
+
+            return result;
+        }
+
+        public async Task<bool> CreateCalendar(CalendarEventViewModel viewModel)
         {
             var filePath = Path.Combine(
                 _configuration.GetValue<string>("LoginInfoFilePath"),
@@ -48,14 +59,12 @@ namespace ToDoApp_backend.UseCase
 
             var userInfo = JsonUtility.JsonDeserialize<UserSession>(filePath);
 
-            var result = await _scheduleRepository.InsertSchedule(viewModel, userInfo.UserId);
-
-            await _calendarRepository.InsertCalendarFromSchedule(result, userInfo.UserId);
+            var result = await _calendarRepository.InsertCalendar(viewModel, userInfo.UserId);
 
             return result;
         }
 
-        public async Task<bool> UpdateSchedule(ScheduleViewModel viewModel)
+        public async Task<bool> UpdateCalendar(CalendarEventViewModel viewModel)
         {
             var filePath = Path.Combine(
                 _configuration.GetValue<string>("LoginInfoFilePath"),
@@ -64,14 +73,14 @@ namespace ToDoApp_backend.UseCase
 
             var userInfo = JsonUtility.JsonDeserialize<UserSession>(filePath);
 
-            var result = await _scheduleRepository.UpdateSchedule(viewModel, userInfo.UserId);
+            var result = await _calendarRepository.UpdateCalendar(viewModel, userInfo.UserId);
 
             return result;
         }
 
-        public async Task DeleteSchedule(long scheduleId)
+        public async Task DeleteCalendar(long scheduleId)
         {
-            await _scheduleRepository.DeleteSchedule(scheduleId);
+            await _calendarRepository.DeleteCalendar(scheduleId);
         }
     }
 }

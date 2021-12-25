@@ -25,7 +25,7 @@ namespace ToDoApp_backend.Controllers
             return Ok(await _useCase.GetSchedule(scheduleId));
         }
 
-        [HttpPost("insert")]
+        [HttpPost]
         public async Task<ActionResult> Post(ScheduleViewModel scheduleViewModel)
         {
             var result = await _useCase.CreateSchedule(scheduleViewModel);
@@ -33,7 +33,7 @@ namespace ToDoApp_backend.Controllers
             return Ok(result);
         }
 
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<ActionResult> Put(ScheduleViewModel scheduleViewModel)
         {
             var result = await _useCase.UpdateSchedule(scheduleViewModel);

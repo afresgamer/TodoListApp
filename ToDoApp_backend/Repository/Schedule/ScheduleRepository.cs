@@ -127,6 +127,17 @@ namespace ToDoApp_backend.Repository.Schedule
                     Update(data);
                     await db.SaveChangesAsync();
 
+                    var calendar = await db.Calendars
+                        .AsNoTracking()
+                        .Where(x => x.ScheduleId == data.Id && x.UserId == userId && x.Title == data.Name)
+                        .FirstOrDefaultAsync();
+                    calendar.Start = data.StartDay;
+                    calendar.End = data.EndDay;
+                    calendar.UpdateDate = DateTime.Now;
+
+                    db.Calendars.Update(calendar);
+                    await db.SaveChangesAsync();
+
                     transaction.Commit();
                     return true;
                 }
@@ -144,8 +155,19 @@ namespace ToDoApp_backend.Repository.Schedule
             {
                 try
                 {
+                    var calendar = await db.Calendars
+                        .AsNoTracking()
+                        .Where(x => x.ScheduleId == scheduleId)
+                        .FirstOrDefaultAsync();
+
                     await Remove(scheduleId);
                     await db.SaveChangesAsync();
+
+                    if (calendar != null)
+                    {
+                        db.Calendars.Remove(calendar);
+                        await db.SaveChangesAsync();
+                    }
 
                     transaction.Commit();
                 }
@@ -163,8 +185,19 @@ namespace ToDoApp_backend.Repository.Schedule
             {
                 try
                 {
+                    var calendar = await db.Calendars
+                        .AsNoTracking()
+                        .Where(x => scheduleIdList.Contains(x.ScheduleId))
+                        .ToListAsync();
+
                     await Remove(scheduleIdList);
                     await db.SaveChangesAsync();
+
+                    if (calendar.Count > 0)
+                    {
+                        db.Calendars.RemoveRange(calendar);
+                        await db.SaveChangesAsync();
+                    }
 
                     transaction.Commit();
                 }
