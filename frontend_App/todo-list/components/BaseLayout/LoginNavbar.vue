@@ -1,19 +1,19 @@
 <template>
   <div>
     <b-navbar-nav>
-      <b-nav-item href="/schedule/0/edit">
+      <b-nav-item @click="clickKino('/schedule/0/edit')">
         新規スケジュール作成
       </b-nav-item>
-      <b-nav-item href="schedule/list">
+      <b-nav-item @click="clickKino('/schedule/list')">
         予定一覧
       </b-nav-item>
-      <b-nav-item href="calender/list">
+      <b-nav-item @click="clickKino('/calender/list')">
         カレンダー確認
       </b-nav-item>
-      <b-nav-item href="/categoryMaster/list">
+      <b-nav-item @click="clickKino('/categoryMaster/list')">
         カテゴリーマスタ一覧
       </b-nav-item>
-      <b-nav-item href="/setting/edit">
+      <b-nav-item @click="clickKino('/setting/edit')">
         設定・ヘルプ
       </b-nav-item>
       <b-nav-form class="ml-3">
@@ -50,6 +50,9 @@ export default Vue.extend({
           location.href = '/login/login'
         })
       }
+    },
+    clickKino (path: string): void {
+      this.$router.push({ path })
     }
   }
 })

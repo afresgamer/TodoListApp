@@ -1,9 +1,4 @@
-export interface ISettingViewModel {
-  NotificationSettingsFlg: boolean
-  CategoryMasterFlg: boolean
-}
-
-export class SettingViewModel implements ISettingViewModel {
-  NotificationSettingsFlg = false
-  CategoryMasterFlg = false
+export class SettingViewModel {
+  NotificationSettingsFlg: boolean = false
+  CategoryMasterFlg: boolean = false
 }

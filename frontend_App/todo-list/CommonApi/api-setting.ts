@@ -6,9 +6,9 @@ function GetSetting () {
   return request.get<SettingViewModel>(path)
 }
 
-function UpsertSetting (data: SettingViewModel) {
+function UpsertSetting (viewModel: SettingViewModel) {
   const path = '/setting'
-  return request.post<boolean>(path, { data })
+  return request.postHeader(path, viewModel)
 }
 
 export default {

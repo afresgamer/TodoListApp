@@ -12,7 +12,7 @@
       <div class="category-table">
         <b-table striped hover :items="items" :fields="fields">
           <template #cell(削除)="data">
-            <b-button variant="primary" @click="deleteData(data.item)">
+            <b-button variant="danger" @click="deleteData(data.item)">
               <b-icon icon="trash-fill" /> 削除
             </b-button>
           </template>
@@ -72,7 +72,8 @@ export default Vue.extend({
         headerClass: 'p-2 border-bottom-0',
         footerClass: 'p-2 border-top-0',
         centered: true
-      }).then(async () => {
+      }).then(async (messageResult: boolean) => {
+        if (!messageResult) { return }
         await CommonApi.ApiCategoryMaster.DeleteCategoryMaster(data).then(() => {
           this.$bvModal.msgBoxOk('削除完了しました。', {
             title: 'メッセージ',
@@ -95,7 +96,8 @@ export default Vue.extend({
         headerClass: 'p-2 border-bottom-0',
         footerClass: 'p-2 border-top-0',
         centered: true
-      }).then(async () => {
+      }).then(async (messageResult: boolean) => {
+        if (!messageResult) { return }
         await CommonApi.ApiCategoryMaster.SortCategoryMaster(this.items).then(() => {
           this.$bvModal.msgBoxOk('並び替え完了しました。', {
             title: 'メッセージ',

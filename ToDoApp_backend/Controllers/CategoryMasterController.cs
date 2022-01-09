@@ -29,7 +29,7 @@ namespace ToDoApp_backend.Controllers
         }
 
         [HttpGet("data-list")]
-        public async Task<ActionResult<DB.CategoryMaster>> GetDataList()
+        public async Task<ActionResult> GetDataList()
         {
             var result = await _useCase.GetCategoryMastersAsync();
 

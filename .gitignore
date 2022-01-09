@@ -80,3 +80,6 @@ frontend_App/todo-list/.editorconfig
 frontend_App/todo-list/package.json
 frontend_App/todo-list/package-lock.json
 frontend_App/todo-list/nuxt.config.js
+ToDoApp_backend/bin/Debug/net5.0/Newtonsoft.Json.Bson.dll
+ToDoApp_backend/bin/Debug/net5.0/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+ToDoApp_backend/bin/Debug/net5.0/Microsoft.AspNetCore.JsonPatch.dll

@@ -1,21 +1,16 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ToDoApp_backend.Setup;
 using ToDoApp_backend.Context;
 using AutoMapper;
 using ToDoApp_backend.DiConfig;
+using System.Text.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace ToDoApp_backend
 {
@@ -31,9 +26,8 @@ namespace ToDoApp_backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers()
-                .AddJsonOptions(opt => opt.JsonSerializerOptions.PropertyNamingPolicy = null);
+                .AddNewtonsoftJson(option => option.SerializerSettings.ContractResolver = new DefaultContractResolver());
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ToDoApp_backend", Version = "v1" });

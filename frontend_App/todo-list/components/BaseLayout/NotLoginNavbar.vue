@@ -16,13 +16,7 @@ import Vue from 'vue'
 export default Vue.extend({
   name: 'NotLoginNavbar',
   created () {},
-  methods: {
-    getNowPath (): void {
-      const path = this.$route.path.split('/')
-      // eslint-disable-next-line no-console
-      console.log(path[2])
-    }
-  }
+  methods: {}
 })
 </script>
 

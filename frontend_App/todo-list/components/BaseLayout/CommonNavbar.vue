@@ -31,7 +31,7 @@ export default Vue.extend({
     userId () {
       this.$nextTick(() => {
         // eslint-disable-next-line no-console
-        console.log('変更されました')
+        // console.log('変更されました')
       })
     }
   },

@@ -13,12 +13,12 @@ function GetCategoryMasterDataList () {
 
 function CreateCategoryMaster (data: CategoryMasterViewModel) {
   const path = '/category-master'
-  return request.post<Boolean>(path, { data })
+  return request.postHeader<Boolean>(path, data)
 }
 
 function SortCategoryMaster (dataList: CategoryMasterViewModel[]) {
   const path = '/category-master/sort'
-  return request.put<Boolean>(path, { data: dataList })
+  return request.putHeader<Boolean>(path, dataList)
 }
 
 function DeleteCategoryMaster (data: CategoryMasterViewModel) {

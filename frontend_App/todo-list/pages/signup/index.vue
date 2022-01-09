@@ -58,9 +58,8 @@ export default Vue.extend({
         headerClass: 'p-2 border-bottom-0',
         footerClass: 'p-2 border-top-0',
         centered: true
-      }).then(async () => {
-        // eslint-disable-next-line no-console
-        console.log('登録処理')
+      }).then(async (messageResult) => {
+        if (!messageResult) { return }
         this.$nuxt.$loading.start()
         const result = await CommonApi.ApiSignup.InsertSignupViewModel(this.signup)
         this.$nuxt.$loading.finish()

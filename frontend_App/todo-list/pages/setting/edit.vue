@@ -12,7 +12,7 @@
         <div class="form-check">
           <b-form-group v-slot="{ ariaDescribedby }">
             <b-form-radio-group
-              v-model="NotificationSettingsValue"
+              v-model="setting.NotificationSettingsFlg"
               :options="NotificationSettingOptions"
               :aria-describedby="ariaDescribedby"
               name="notification-Setting"
@@ -23,10 +23,10 @@
         <h6>カテゴリーマスタ操作権限設定</h6>
         <div class="form-check">
           <b-form-group>
-            <b-form-radio v-model="CategoryMasterValue" name="authority" value="false">
+            <b-form-radio v-model="setting.CategoryMasterFlg" name="authority" :value="false">
               権限なし
             </b-form-radio>
-            <b-form-radio v-model="CategoryMasterValue" name="authority" value="true">
+            <b-form-radio v-model="setting.CategoryMasterFlg" name="authority" :value="true">
               権限あり
             </b-form-radio>
           </b-form-group>
@@ -74,32 +74,9 @@ export default Vue.extend({
       setting: new SettingViewModel()
     }
   },
-  computed: {
-    NotificationSettingsValue: {
-      get () {
-        const data: SettingViewModel = this.setting
-        return String(data.NotificationSettingsFlg === true)
-      },
-      set (values) {
-        this.setting.NotificationSettingsFlg = Boolean(values)
-      }
-    },
-    CategoryMasterValue: {
-      get () {
-        const data: SettingViewModel = this.setting
-        return String(data.CategoryMasterFlg === true)
-      },
-      set (values) {
-        this.setting.CategoryMasterFlg = Boolean(values)
-      }
-    }
-  },
+  computed: {},
   created () {
     this.getInitData()
-  },
-  mounted () {
-    // eslint-disable-next-line no-console
-    console.log(this.setting)
   },
   methods: {
     async getInitData (): Promise<void> {
@@ -113,7 +90,8 @@ export default Vue.extend({
         headerClass: 'p-2 border-bottom-0',
         footerClass: 'p-2 border-top-0',
         centered: true
-      }).then(async () => {
+      }).then(async (messageResult: boolean) => {
+        if (!messageResult) { return }
         this.$nuxt.$loading.start()
         const result = await CommonApi.ApiSetting.UpsertSetting(this.setting)
         this.$nuxt.$loading.finish()

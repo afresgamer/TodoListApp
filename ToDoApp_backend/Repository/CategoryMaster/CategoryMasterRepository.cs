@@ -63,7 +63,7 @@ namespace ToDoApp_backend.Repository.CategoryMaster
 
         public async Task<bool> InsertCategoryMaster(CategoryMasterViewModel viewModel, long userId)
         {
-            if (viewModel == null) return false;
+            if (viewModel == null || string.IsNullOrEmpty(viewModel.CategoryName)) return false;
 
             using (var transaction = db.Database.BeginTransaction())
             {

@@ -86,8 +86,6 @@ export default Vue.extend({
     //   console.log(arg)
     // },
     handleEventClick (arg) {
-      // eslint-disable-next-line no-console
-      console.log(arg)
       const id = this.getCalendarIdViewModel(arg)
       this.calendarId = id
       this.isKantanSchedule = true

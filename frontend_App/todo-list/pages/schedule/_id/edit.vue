@@ -1,6 +1,16 @@
 <template>
   <div>
-    <base-breadcrumb :breadcrumb-items="breadcrumbItems" />
+    <b-breadcrumb class="breadcrumb-main-area">
+      <b-breadcrumb-item href="/home">
+        ホーム
+      </b-breadcrumb-item>
+      <b-breadcrumb-item v-if="scheduleId > 0" active>
+        スケジュール更新
+      </b-breadcrumb-item>
+      <b-breadcrumb-item v-else active>
+        スケジュール作成
+      </b-breadcrumb-item>
+    </b-breadcrumb>
     <b-container>
       <div v-if="scheduleId === 0">
         <div class="py-5 text-center">
@@ -153,7 +163,6 @@ import { CategoryMaster, ScheduleViewModel } from '../../../types'
 import CommonApi from '../../../CommonApi'
 
 interface Data {
-  breadcrumbItems: any
   scheduleId: number
   schedule: ScheduleViewModel
   categoryMasters: CategoryMaster[]
@@ -168,16 +177,6 @@ export default Vue.extend({
   components: {},
   data (): Data {
     return {
-      breadcrumbItems: [
-        {
-          text: 'ホーム',
-          href: '/home'
-        },
-        {
-          text: 'スケジュール作成',
-          active: true
-        }
-      ],
       scheduleId: 0,
       schedule: new ScheduleViewModel(),
       categoryMasters: []
@@ -209,8 +208,6 @@ export default Vue.extend({
     async getInitData (): Promise<void> {
       const path = this.$route.path.split('/')
       this.scheduleId = Number(path[2])
-      // eslint-disable-next-line no-console
-      console.log(this.scheduleId)
       this.schedule = await CommonApi.ApiSchedule.GetSchedule(this.scheduleId)
       if (this.schedule.StartDay.toString() === '0001-01-01T00:00:00') { this.schedule.StartDay = new Date() }
       if (this.schedule.EndDay.toString() === '0001-01-01T00:00:00') { this.schedule.EndDay = new Date() }
@@ -219,8 +216,6 @@ export default Vue.extend({
     register (isUpdate: boolean) : void {
       const meg = isUpdate ? '更新してもよろしいでしょうか？' : '登録してもよろしいでしょうか？'
 
-      // eslint-disable-next-line no-console
-      console.log(this.schedule)
       this.$bvModal.msgBoxConfirm(meg, {
         title: 'メッセージ',
         size: 'sm',
@@ -236,8 +231,7 @@ export default Vue.extend({
           await CommonApi.ApiSchedule.InsertSchedule(this.schedule).then((result) => {
             this.$nuxt.$loading.finish()
             location.href = `/schedule/${result}/edit`
-          // eslint-disable-next-line no-console
-          }).catch((err) => { console.log(err) })
+          }).catch()
         } else {
           this.$nuxt.$loading.start()
           const result = await CommonApi.ApiSchedule.UpdateSchedule(this.schedule)
@@ -266,6 +260,11 @@ export default Vue.extend({
 </script>
 
 <style>
+.breadcrumb-main-area {
+  margin-left: 80px;
+  width: 90%;
+}
+
 .container {
   margin-top: 10px;
   max-width: 600px;

@@ -93,8 +93,6 @@ export default Vue.extend({
       const arr: ScheduleListViewModel[] = _.filter(this.scheduleList, (data: ScheduleListViewModel) => {
         return data.DeletedFlg === true
       })
-      // eslint-disable-next-line no-console
-      console.log(arr.length)
       if (arr.length <= 0) {
         this.$bvModal.msgBoxOk('チェックを一つ以上つけてください。', {
           title: 'メッセージ',

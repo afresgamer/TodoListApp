@@ -72,7 +72,8 @@ export default Vue.extend({
         headerClass: 'p-2 border-bottom-0',
         footerClass: 'p-2 border-top-0',
         centered: true
-      }).then(async () => {
+      }).then(async (messageResult: boolean) => {
+        if (!messageResult) { return }
         this.$nuxt.$loading.start()
         const result = await CommonApi.ApiCategoryMaster.CreateCategoryMaster(this.item)
         this.$nuxt.$loading.finish()

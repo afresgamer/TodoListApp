@@ -146,8 +146,6 @@ export default Vue.extend({
   },
   methods: {
     async getInitData (): Promise<void> {
-      // eslint-disable-next-line no-console
-      console.log('init')
       this.calendar = await CommonApi.ApiCalendar.GetCalendar(Number(this.calendarId))
       this.categoryMasters = await CommonApi.ApiCategoryMaster.GetCategoryMasterDataList()
     },
