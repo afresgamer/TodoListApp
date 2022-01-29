@@ -20,6 +20,12 @@ namespace ToDoApp_backend.Controllers
             _useCase = useCase;
         }
 
+        [HttpGet("after-get-user-name")]
+        public async Task<ActionResult> Get()
+        {
+            return Ok(await _useCase.GetUserNameAsync());
+        }
+
         [HttpPut]
         public async Task<ActionResult> Put(LoginViewModel loginViewModel)
         {

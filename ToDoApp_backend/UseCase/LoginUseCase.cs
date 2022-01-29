@@ -25,6 +25,20 @@ namespace ToDoApp_backend.UseCase
             _configuration = configuration;
         }
 
+        public async Task<string> GetUserNameAsync()
+        {
+            var filePath = Path.Combine(
+                _configuration.GetValue<string>("LoginInfoFilePath"),
+                _configuration.GetValue<string>("LoginInfoFileName")
+            );
+
+            var userInfo = JsonUtility.JsonDeserialize<UserSession>(filePath);
+
+            var result = await _userRepository.FindUserInfo(userInfo.UserId);
+
+            return result != null ? result.Name : "";
+        }
+
         public async Task<long> Login(LoginViewModel loginViewModel)
         {
             var user = await _userRepository.FindLoginUser(loginViewModel);

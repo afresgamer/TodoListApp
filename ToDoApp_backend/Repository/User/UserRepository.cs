@@ -18,6 +18,7 @@ namespace ToDoApp_backend.Repository.User
         Task<DB.User> FindLoginUser(LoginViewModel loginViewModel);
         Task<bool> FindLoginInfo(UserSession userSession);
         Task<DB.User> InsertSignupUser(SignupViewModel viewModel, DB.License license);
+        Task<DB.User> UpdateUserAsync(long userId);
     }
 
     public class UserRepository : RepositoryBase<DB.User>, IUserRepository
@@ -91,6 +92,32 @@ namespace ToDoApp_backend.Repository.User
                         .Where(x => x.Name == user.Name && x.NameKana == user.NameKana)
                         .FirstOrDefaultAsync();
                     return data;
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+        }
+
+        public async Task<DB.User> UpdateUserAsync(long userId)
+        {
+            if (userId == 0) return null;
+
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var user = await FindAsync(userId);
+                    user.UpdateDate = DateTime.Now;
+
+                    Update(user);
+                    await db.SaveChangesAsync();
+
+                    transaction.Commit();
+
+                    return user;
                 }
                 catch (Exception)
                 {

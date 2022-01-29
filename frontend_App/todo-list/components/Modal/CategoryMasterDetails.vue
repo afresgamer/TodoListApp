@@ -86,7 +86,7 @@ export default Vue.extend({
           footerClass: 'p-2 border-top-0',
           centered: true
         }).then(() => {
-          if (message) {
+          if (result) {
             this.close()
             this.$bvModal.hide('baseModal')
           }

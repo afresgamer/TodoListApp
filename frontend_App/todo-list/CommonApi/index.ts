@@ -7,6 +7,7 @@ import ApiSetting from './api-setting'
 import ApiSchedule from './api-schedule'
 import ApiScheduleList from './api-scheduleList'
 import ApiCalendar from './api-calendar'
+import ApiResetPassword from './api-ResetPassword'
 
 export default {
   ApiSample,
@@ -17,5 +18,6 @@ export default {
   ApiSetting,
   ApiSchedule,
   ApiScheduleList,
-  ApiCalendar
+  ApiCalendar,
+  ApiResetPassword
 }

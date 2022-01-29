@@ -13,6 +13,7 @@ namespace ToDoApp_backend.Repository.License
     {
         Task<DB.License> InsertInitLicense(string password);
         Task<bool> UpdateLicenseAsync(DB.User user, bool isUseFlg);
+        Task<bool> UpdateResetPasswordAsync(DB.User user, string password);
     }
 
     public class LicenseRepository : RepositoryBase<DB.License>, ILicenseRepository
@@ -70,6 +71,35 @@ namespace ToDoApp_backend.Repository.License
                     var license = await FindAsync(user.LicenseId);
 
                     license.UseFlg = isUseFlg;
+                    license.UpdateDate = DateTime.Now;
+                    Update(license);
+                    await db.SaveChangesAsync();
+
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+        }
+
+        public async Task<bool> UpdateResetPasswordAsync(DB.User user, string password)
+        {
+            if (user == null) return false;
+
+            var (hash, salt) = PasswordUtility.HashPassword(password);
+
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var license = await FindAsync(user.LicenseId);
+
+                    license.Hash = hash;
+                    license.Salt = salt;
                     license.UpdateDate = DateTime.Now;
                     Update(license);
                     await db.SaveChangesAsync();

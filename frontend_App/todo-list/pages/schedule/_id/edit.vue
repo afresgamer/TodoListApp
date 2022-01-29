@@ -68,7 +68,7 @@
             <label class="float-left">使用時間 <base-badge :varient-type="4" /></label>
             <base-text-validation v-model="schedule.UsageTime" rules="required|min:1|max:8" fieldname="任意の使用時間を入力" />
           </b-form-group>
-          <b-form-group v-show="schedule.NoticeSettingFlg">
+          <!-- <b-form-group v-show="schedule.NoticeSettingFlg">
             <label class="float-left">通知設定</label>
             <div class="text-center mr-5 pr-5">
               <b-form-checkbox v-model="schedule.LineFlg" class="mr-1">
@@ -78,8 +78,8 @@
                 Slack通知
               </b-form-checkbox>
             </div>
-          </b-form-group>
-          <div v-show="schedule.LineFlg">
+          </b-form-group> -->
+          <!-- <div v-show="schedule.LineFlg">
             <b-form-group>
               <label>LINEアカウント </label>
               <b-form-input
@@ -96,8 +96,8 @@
                 placeholder="任意のパスワードを入力"
               />
             </b-form-group>
-          </div>
-          <div v-show="schedule.SlackFlg">
+          </div> -->
+          <!-- <div v-show="schedule.SlackFlg">
             <b-form-group>
               <label>Slackアカウント </label>
               <b-form-input
@@ -114,7 +114,7 @@
                 placeholder="任意のパスワードを入力"
               />
             </b-form-group>
-          </div>
+          </div> -->
           <b-form-group class="mb-5">
             <label>カテゴリー </label>
             <div v-if="schedule.CategoryMasterFlg">

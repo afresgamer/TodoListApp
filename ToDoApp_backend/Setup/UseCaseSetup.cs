@@ -19,6 +19,7 @@ namespace ToDoApp_backend.Setup
             services.AddScoped<ScheduleUseCase>();
             services.AddScoped<ScheduleListUseCase>();
             services.AddScoped<CalendarUseCase>();
+            services.AddScoped<ResetPasswordUseCase>();
         }
     }
 }

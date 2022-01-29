@@ -17,9 +17,11 @@
         設定・ヘルプ
       </b-nav-item>
       <b-nav-form class="ml-3">
-        <b-button variant="outline-light" size="md" class="my-2 my-sm-0" @click="logout">
-          ログアウト
-        </b-button>
+        <b-dropdown id="dropdown-right" right :text="userName" variant="outline-light">
+          <b-dropdown-item variant="success" size="md" class="my-2 my-sm-0" @click="logout">
+            ログアウト
+          </b-dropdown-item>
+        </b-dropdown>
       </b-nav-form>
     </b-navbar-nav>
   </div>
@@ -31,8 +33,21 @@ import CommonApi from '../../CommonApi'
 
 export default Vue.extend({
   name: 'LoginNavber',
-  created () {},
+  data () {
+    return { userName: '' }
+  },
+  created () {
+    this.getInitData()
+  },
   methods: {
+    async getInitData (): Promise<void> {
+      this.$nuxt.$loading.start()
+      const result = await CommonApi.ApiLogin.GetUserName()
+      this.$nuxt.$loading.finish()
+      if (result) {
+        this.userName = String(result)
+      }
+    },
     async logout () : Promise<void> {
       this.$nuxt.$loading.start()
       const result = await CommonApi.ApiLogin.Logout()
