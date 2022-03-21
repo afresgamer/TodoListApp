@@ -10,6 +10,7 @@ using ToDoApp_backend.Repository.CategoryMaster;
 using ToDoApp_backend.Repository.Setting;
 using ToDoApp_backend.Repository.Schedule;
 using ToDoApp_backend.Repository.Calendar;
+using ToDoApp_backend.Repository.SysMenu;
 
 namespace ToDoApp_backend.Setup
 {
@@ -24,6 +25,7 @@ namespace ToDoApp_backend.Setup
             services.AddTransient<ISettingRepository, SettingRepository>();
             services.AddTransient<IScheduleRepository, ScheduleRepository>();
             services.AddTransient<ICalendarRepository, CalendarRepository>();
+            services.AddTransient<ISysMenuRepository, SysMenuRepository>();
         }
     }
 }

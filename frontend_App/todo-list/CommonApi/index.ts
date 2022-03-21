@@ -8,6 +8,7 @@ import ApiSchedule from './api-schedule'
 import ApiScheduleList from './api-scheduleList'
 import ApiCalendar from './api-calendar'
 import ApiResetPassword from './api-ResetPassword'
+import ApiScreenTransition from './api-screen-transition'
 
 export default {
   ApiSample,
@@ -19,5 +20,6 @@ export default {
   ApiSchedule,
   ApiScheduleList,
   ApiCalendar,
-  ApiResetPassword
+  ApiResetPassword,
+  ApiScreenTransition
 }

@@ -7,6 +7,7 @@ using ToDoApp_backend.Utility;
 using ToDoApp_backend.ViewModel.Signup;
 using ToDoApp_backend.Repository.License;
 using ToDoApp_backend.Repository.User;
+using ToDoApp_backend.Repository.SysMenu;
 
 namespace ToDoApp_backend.UseCase
 {
@@ -14,12 +15,18 @@ namespace ToDoApp_backend.UseCase
     {
         private readonly IUserRepository _repository;
         private readonly ILicenseRepository _licenseRepository;
+        private readonly ISysMenuRepository _sysMenuRepository;
         private readonly IConfiguration _configuration;
 
-        public SignupUseCase(IUserRepository repository, ILicenseRepository licenseRepository, IConfiguration configuration)
+        public SignupUseCase(
+            IUserRepository repository, 
+            ILicenseRepository licenseRepository,
+            ISysMenuRepository sysMenuRepository,
+            IConfiguration configuration)
         {
             _repository = repository;
             _licenseRepository = licenseRepository;
+            _sysMenuRepository = sysMenuRepository;
             _configuration = configuration;
         }
 
@@ -36,6 +43,9 @@ namespace ToDoApp_backend.UseCase
             var fromAddress = _configuration.GetValue<string>("fromAddress");
             MailApi.SendMail(result.Id, fromAddress, viewModel.MailAddress, viewModel.UserName);
 
+            //画面一覧に初期データを挿入
+            await _sysMenuRepository.InsertSysMenu(result.Id);
+            
             return result.Id;
         }
     }

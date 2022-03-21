@@ -41,9 +41,7 @@ export default Vue.extend({
   },
   methods: {
     async getInitData (): Promise<void> {
-      this.$nuxt.$loading.start()
       const result = await CommonApi.ApiLogin.GetUserName()
-      this.$nuxt.$loading.finish()
       if (result) {
         this.userName = String(result)
       }
