@@ -2,7 +2,7 @@
   <div>
     <b-navbar-nav>
       <b-nav-form class="ml-3">
-        <b-button v-show="unauthorized" variant="outline-light" href="/signup" size="md" class="my-2 my-sm-0">
+        <b-button v-show="!unauthorized" variant="outline-light" href="/signup" size="md" class="my-2 my-sm-0">
           サインアップ
         </b-button>
       </b-nav-form>
